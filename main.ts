@@ -18,6 +18,13 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . 
 `, -50, 0)
 })
+info.onCountdownEnd(function () {
+    game.splash("You Survived!")
+    game.over(true)
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, otherSprite) {
+	
+})
 let villian: Sprite = null
 let fire: Sprite = null
 game.splash("Directions for Game:Survive The Wave")
