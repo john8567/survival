@@ -18,12 +18,16 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . 
 `, -50, 0)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+})
 info.onCountdownEnd(function () {
     game.splash("You Survived!")
     game.over(true)
 })
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, otherSprite) {
-	
+info.onLifeZero(function () {
+    villian.destroy()
+    game.over(false)
 })
 let villian: Sprite = null
 let fire: Sprite = null
@@ -48,8 +52,9 @@ let hero = sprites.create(img`
 `, SpriteKind.Player)
 hero.x = 150
 controller.moveSprite(hero, 0, 100)
-hero.setFlag(SpriteFlag.StayInScreen, true)
+hero.setFlag(SpriteFlag.StayInScreen, false)
 info.startCountdown(50)
+info.setLife(1)
 forever(function () {
     villian = sprites.create(img`
 . . . . . . . . . . 8 2 8 . . . 
@@ -69,24 +74,6 @@ forever(function () {
 8 8 8 8 8 f f f f 2 2 2 8 8 . . 
 . . . 8 8 8 8 8 8 8 8 8 8 . . . 
 `, SpriteKind.Enemy)
-    villian = sprites.create(img`
-. . . . . . . . . . 8 2 8 . . . 
-. . . . . . . . . 8 2 8 . . . . 
-. . . . . . 8 8 8 8 8 8 . . . . 
-. . . . . 8 8 2 2 2 2 2 8 . . . 
-. . . . 8 8 2 f 8 f 2 f 2 8 . . 
-. . . . 8 2 2 8 f f f f 2 2 2 8 
-. . . . 8 2 2 f f 8 2 2 2 2 8 . 
-. . . 8 f 2 2 2 2 2 2 2 2 8 . . 
-. . 8 f f 2 2 2 2 2 2 2 2 8 . . 
-. 8 f f f f 2 2 2 2 2 2 2 2 8 . 
-8 f f f 8 8 8 2 2 2 2 2 2 2 8 . 
-8 f f 8 2 2 f 8 2 2 2 2 2 2 8 . 
-8 8 8 f 2 f 8 f 2 2 2 2 2 2 8 . 
-. 8 2 2 8 8 f f 2 2 2 2 2 f 8 . 
-8 8 8 8 8 f f f f 2 2 2 8 8 . . 
-. . . 8 8 8 8 8 8 8 8 8 8 . . . 
-`, SpriteKind.Player)
     villian.setPosition(0, Math.randomRange(0, 120))
     villian.vx = 80
     pause(500)
