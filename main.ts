@@ -55,6 +55,7 @@ controller.moveSprite(hero, 0, 100)
 hero.setFlag(SpriteFlag.StayInScreen, false)
 info.startCountdown(50)
 info.setLife(1)
+info.changeScoreBy(100)
 forever(function () {
     villian = sprites.create(img`
 . . . . . . . . . . 8 2 8 . . . 
